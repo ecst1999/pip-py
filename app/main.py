@@ -1,27 +1,32 @@
 import utils
 import read_csv
 import charts
+import pandas as pd
 
 
 def run():
-  data = read_csv.read_csv('data.csv')
-  country = input('Digite el pais =>')
-  result = utils.population_by_country(data, country)
+  '''
 
   if len(result) > 0:
     countrys = result[0]
     labels, values = utils.population_by_country_years(countrys)
-    charts.generate_bar_chart(country, labels, values)
-
+    
   print(result)
+  '''
+  df = pd.read_csv('data.csv')  
+  df = df[df['Continent'] == 'South America']
 
-  #draw_population_bars()
+  countries = df['Country/Territory'].values
+  percentages = df['World Population Percentage'].values
+  charts.generate_pie_chart(countries, percentages)
+  #country = input('Digite el pais =>')  
+
+  
 
 
 def draw_population_bars():
   data = read_csv.read_csv('data.csv')
   labels, values = utils.get_world_population(data)
-  charts.generate_pie_chart(labels, values)
 
 
 if __name__ == '__main__':
